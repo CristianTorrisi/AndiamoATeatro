@@ -9,6 +9,6 @@ public interface Dao<T> {
     boolean insert(T entity) throws IOException, SQLException;
     boolean update(T entity) throws IOException, SQLException;
     boolean delete(T entity) throws IOException, SQLException;
-    Optional<T> getById(int id);
-    List<T> getAll();
+    Optional<T> getById(int id) throws IOException, SQLException;
+    List<T> getAll() throws IOException, SQLException;
 }
