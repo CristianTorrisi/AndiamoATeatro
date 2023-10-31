@@ -60,12 +60,12 @@ public class UtenteCrud implements Dao<Utente> {
     }
 
     @Override
-    public Optional<Utente> getById(int id) {
+    public Optional<Utente> getById(int id) throws IOException, SQLException {
         return Optional.empty();
     }
 
     @Override
-    public List<Utente> getAll() {
+    public List<Utente> getAll() throws IOException, SQLException {
         return null;
     }
 }
