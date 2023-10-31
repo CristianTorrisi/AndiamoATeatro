@@ -12,18 +12,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class SedeCrud implements Dao<Sede> {
-
+public class SalaCrud implements Dao<Sala> {
     @Override
-    public boolean insert(Sede entity) throws IOException, SQLException {
-        String sql = "INSERT INTO public.\"SEDE\" VALUES (?,?,?,?,?);";
+    public boolean insert(Sala entity) throws IOException, SQLException {
+        String sql = "INSERT INTO public.\"SALA\" VALUES (?,?,?,?);";
         ConnectionHandler ch = new ConnectionHandler();
         PreparedStatement ps = ch.getPreparedStatement(sql);
         ps.setInt(1, entity.getId());
         ps.setString(2,entity.getNome());
-        ps.setString(3,entity.getIndirizzo());
-        ps.setString(4,entity.getComune());
-        ps.setBoolean(5, entity.isAl_chiuso());
+        ps.setInt(3,entity.getN_posti());
+        ps.setInt(4,entity.getSede());
         int affected = ps.executeUpdate();
         ch.closeConnection();
         ps.close();
@@ -31,17 +29,16 @@ public class SedeCrud implements Dao<Sede> {
     }
 
     @Override
-    public boolean update(Sede entity) throws IOException, SQLException {
-        String sql = "UPDATE public.\"SEDE\" SET " +
-                "nome=?, indirizzo=?, comune=?, al_chiuso=? " +
+    public boolean update(Sala entity) throws IOException, SQLException {
+        String sql = "UPDATE public.\"SALA\" SET " +
+                "nome=?, n_posti=?, sede=? " +
                 "WHERE id=?;";
         ConnectionHandler ch = new ConnectionHandler();
         PreparedStatement ps = ch.getPreparedStatement(sql);
         ps.setString(1,entity.getNome());
-        ps.setString(2,entity.getIndirizzo());
-        ps.setString(3,entity.getComune());
-        ps.setBoolean(4,entity.isAl_chiuso());
-        ps.setInt(5,entity.getId());
+        ps.setInt(2,entity.getN_posti());
+        ps.setInt(3,entity.getSede());
+        ps.setInt(4, entity.getId());
         int affected = ps.executeUpdate();
         ch.closeConnection();
         ps.close();
@@ -49,8 +46,8 @@ public class SedeCrud implements Dao<Sede> {
     }
 
     @Override
-    public boolean delete(Sede entity) throws IOException, SQLException {
-        String sql = "DELETE FROM public.\"SEDE\" WHERE id=?;";
+    public boolean delete(Sala entity) throws IOException, SQLException {
+        String sql = "DELETE FROM public.\"SALA\" WHERE id=?;";
         ConnectionHandler ch = new ConnectionHandler();
         PreparedStatement ps = ch.getPreparedStatement(sql);
         ps.setInt(1,entity.getId());
@@ -61,37 +58,37 @@ public class SedeCrud implements Dao<Sede> {
     }
 
     @Override
-    public Optional<Sede> getById(int id) throws IOException, SQLException {
-        String sql = "SELECT * FROM public.\"SEDE\" WHERE id=" + id + ";";
+    public Optional<Sala> getById(int id) throws IOException, SQLException {
+        String sql = "SELECT * FROM public.\"SALA\" WHERE id=" + id +";";
         ConnectionHandler ch = new ConnectionHandler();
         PreparedStatement ps = ch.getPreparedStatement(sql);
         ResultSet r = ps.executeQuery();
-        Sede sede = new Sede();
-        if(r.next()) sede = new Sede(r.getInt(1), r.getString(2), r.getString(3), r.getString(4), r.getBoolean(5));
+        Sala sala = new Sala();
+        if(r.next()) sala = new Sala(r.getInt(1), r.getString(2), r.getInt(3), r.getInt(4));
         ch.closeConnection();
         ps.close();
-        return Optional.of(sede);
+        return Optional.of(sala);
     }
 
     @Override
-    public List<Sede> getAll() throws IOException, SQLException{
-        String sql = "SELECT * FROM public.\"SEDE\"";
+    public List<Sala> getAll() throws IOException, SQLException{
+        String sql = "SELECT * FROM public.\"SALA\"";
         ConnectionHandler ch = new ConnectionHandler();
         PreparedStatement ps = ch.getPreparedStatement(sql);
-        List<Sede> sedi = new ArrayList<>();
+        List<Sala> sale = new ArrayList<>();
         ResultSet r = ps.executeQuery();
         while (r.next()) {
-            sedi.add(new Sede(r.getInt(1), r.getString(2), r.getString(3), r.getString(4), r.getBoolean(5)));
+            sale.add(new Sala(r.getInt(1), r.getString(2), r.getInt(3), r.getInt(4)));
         }
         ch.closeConnection();
         ps.close();
-        return sedi;
+        return sale;
     }
 
     public static void main(String[] args) throws SQLException, IOException {
-        SedeCrud crud = new SedeCrud();
-        List<Sede> rs = crud.getAll();
-        for (Sede r : rs) {
+        SalaCrud crud = new SalaCrud();
+        List<Sala> rs = crud.getAll();
+        for (Sala r : rs) {
             System.out.println(r.getId());
         }
         System.out.println(crud.getById(1).orElse(null));
