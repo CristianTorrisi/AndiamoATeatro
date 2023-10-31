@@ -62,6 +62,10 @@ public class ConnectionHandler {
 
         while (results.next()){
             System.out.println(results.getString("nome"));
+            System.out.println(results.getString("cognome"));
+            System.out.println(results.getString("indirizzo"));
+            System.out.println(results.getString("telefono"));
+            System.out.println(results.getInt("eta"));
         }
 
         ch.closeConnection();

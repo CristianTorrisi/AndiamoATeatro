@@ -7,8 +7,8 @@ import java.util.Optional;
 
 public interface Dao<T> {
     boolean insert(T entity) throws IOException, SQLException;
-    boolean update(T entity);
-    boolean delete(T entity);
+    boolean update(T entity) throws IOException, SQLException;
+    boolean delete(T entity) throws IOException, SQLException;
     Optional<T> getById(int id);
     List<T> getAll();
 }
