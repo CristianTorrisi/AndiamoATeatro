@@ -61,6 +61,7 @@ public class ConnectionHandler {
         ResultSet results = ps.executeQuery();
 
         while (results.next()){
+            System.out.println(results.getInt("id"));
             System.out.println(results.getString("nome"));
             System.out.println(results.getString("cognome"));
             System.out.println(results.getString("indirizzo"));
