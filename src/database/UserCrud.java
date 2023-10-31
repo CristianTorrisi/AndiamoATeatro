@@ -17,10 +17,11 @@ public class UserCrud implements Dao<Utente> {
             PreparedStatement ps = ch.getPreparedStatement(sql);
             ps.setInt(1, entity.getId());
             ps.setString(2,entity.getNome());
-            ps.setString(3,entity.getIndirizzo());
-            ps.setString(4,entity.getTelefono());
+            ps.setString(3,entity.getCognome());
+            ps.setString(4,entity.getIndirizzo());
             ps.setString(5,entity.getEmail());
-            ps.setInt(6,entity.getEta());
+            ps.setString(6,entity.getTelefono());
+            ps.setInt(7,entity.getEta());
             int affectedrows = ps.executeUpdate();
             ch.closeConnection();
             ps.close();
